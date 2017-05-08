@@ -91,6 +91,7 @@ struct dynamic_arr_t sqr_of_odds(struct dynamic_arr_t array)
 			if(*(array.arr+i)==*(even.arr+j))*(array.arr+i)=0;
 		}
 	}
+	free_dynamic_arr(&even);
 	j=0;
 	sqr_odds.arr=malloc(sizeof(int));
 	for(i=0;i<array.size;i++)
