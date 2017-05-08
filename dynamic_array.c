@@ -16,7 +16,7 @@ struct dynamic_arr_t sqr_of_odds(struct dynamic_arr_t);
 int main()
 {
 	struct dynamic_arr_t array;
-	int i,p=5;
+	int i,p=10;
 	array=generate(p);
 	//array=filter_even(array);
 	//array=map_sqr(array);
@@ -80,31 +80,32 @@ struct dynamic_arr_t map_sqr(struct dynamic_arr_t array)
 }
 struct dynamic_arr_t sqr_of_odds(struct dynamic_arr_t array)
 {
-	int i,j,size=0;
+	int i,j,size=0,flag=1,a=0;
 	struct dynamic_arr_t sqr_odds;
 	struct dynamic_arr_t even;
 	even=filter_even(array);
+	sqr_odds.arr=malloc(sizeof(int));
 	for(i=0;i<array.size;i++)
 	{
 		for(j=0;j<even.size;j++)
 		{
-			if(*(array.arr+i)==*(even.arr+j))*(array.arr+i)=0;
+			if(*(array.arr+i)==*(even.arr+j))
+			{
+				flag--;
+				break;
+			}
 		}
-	}
-	free_dynamic_arr(&even);
-	j=0;
-	sqr_odds.arr=malloc(sizeof(int));
-	for(i=0;i<array.size;i++)
-	{
-		if(*(array.arr+i)!=0)
+		if(flag==1)
 		{
 			size++;
 			sqr_odds.arr=realloc(sqr_odds.arr,size);
-			*(sqr_odds.arr+j)=*(array.arr+i);
-			j++;
+			*(sqr_odds.arr+a)=*(array.arr+i);
+			a++;
 		}
+		flag=1;
 	}
-	sqr_odds.size=j;
+	free_dynamic_arr(&even);
+	sqr_odds.size=a;
 	sqr_odds=map_sqr(sqr_odds);
 	return sqr_odds;
 }
