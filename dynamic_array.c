@@ -12,19 +12,19 @@ void free_dynamic_arr(struct dynamic_arr_t*);
 struct dynamic_arr_t filter_even(struct dynamic_arr_t);
 struct dynamic_arr_t map_sqr(struct dynamic_arr_t);
 struct dynamic_arr_t sqr_of_odds(struct dynamic_arr_t);
+int reduce_sum(struct dynamic_arr_t);
 
 int main()
 {
 	struct dynamic_arr_t array;
+	struct dynamic_arr_t even;
+	struct dynamic_arr_t odds;
 	int i,p=10;
 	array=generate(p);
 	//array=filter_even(array);
 	//array=map_sqr(array);
-	array=sqr_of_odds(array);
-	for(i=0;i<array.size;i++)
-	{
-		printf("%d\n",*(array.arr+i));
-	}
+	//array=sqr_of_odds(array);
+	printf("%d\n",reduce_sum(array));
 	free_dynamic_arr(&array);
 	return 0;
 }
@@ -108,5 +108,14 @@ struct dynamic_arr_t sqr_of_odds(struct dynamic_arr_t array)
 	sqr_odds.size=a;
 	sqr_odds=map_sqr(sqr_odds);
 	return sqr_odds;
+}
+int reduce_sum(struct dynamic_arr_t array)
+{
+	int i=0,sum=0;
+	for(i=0;i<array.size;i++)
+	{
+		sum+=*(array.arr+i);
+	}
+	return sum;
 }
 
