@@ -5,7 +5,7 @@
 // PROBLEM: #6
 // FILE NAME: stack.c
 // FILE PURPOSE:
-// Creating a stack i C with functions initialise,destroy,push,top,pop
+// Creating a stack in C with functions initialise,destroy,push,top,pop
 //------------------------------------------------------------------------
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,6 +29,8 @@ int main()
 	stack st;
 	stack_init(&st);
 	stack_push(&st,2);
+	stack_push(&st,4);
+	stack_push(&st,6);
 	stack_pop(&st);
 	if(stack_empty(&st))
 	{
@@ -52,8 +54,8 @@ void stack_init(stack* st)
 // stack* st => That's our stack. It's a pointer because we want to keep the values after the end
 // of the function 
 //------------------------------------------------------------------------
-	st->capacity = 10;
-	st->elements = malloc(st->capacity*sizeof(int));
+	st->capacity = 1;
+	st->elements = (int*)malloc(st->capacity*sizeof(int));
 	st->size = 0;
 }
 void stack_destroy(stack* st)
@@ -65,6 +67,8 @@ void stack_destroy(stack* st)
 // stack* st => That's our stack. It's a pointer because we want to keep the values after the end
 // of the function
 //------------------------------------------------------------------------
+	st->size = 0;
+	st -> capacity = 0;
 	free(st->elements);
 	st->elements = NULL; //no double free possible
 }
@@ -93,13 +97,11 @@ void stack_push (stack* st, int val)
 	if(st->size == st->capacity)
 	{
 		st->capacity*=2;
-		st->elements = realloc(st->elements,st->capacity);
-	}
-	else
-	{	
-		*(st->elements+st->size) = val;
-		st->size++;
-	}
+		st->elements = (int*)realloc(st->elements,st->capacity*sizeof(int));
+	}	
+	*(st->elements+st->size) = val;
+	st->size++;
+
 }
 int stack_top(stack* st)
 {
@@ -110,7 +112,7 @@ int stack_top(stack* st)
 // stack* st => That's our stack. It's a pointer because we want to keep the values after the end
 // of the function
 //------------------------------------------------------------------------
-	return *(st->elements+st->size-1); //size is always +1
+	return *(st->elements+st->size-1); //size always +1
 }
 void stack_pop(stack* st)
 {
