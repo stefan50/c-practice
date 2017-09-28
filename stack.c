@@ -90,8 +90,16 @@ void stack_push (stack* st, int val)
 // of the function
 // int val => the element we "push"
 //------------------------------------------------------------------------
-	*(st->elements+st->size) = val;
-	st->size++;
+	if(st->size == st->capacity)
+	{
+		st->capacity*=2;
+		st->elements = realloc(st->elements,st->capacity);
+	}
+	else
+	{	
+		*(st->elements+st->size) = val;
+		st->size++;
+	}
 }
 int stack_top(stack* st)
 {
