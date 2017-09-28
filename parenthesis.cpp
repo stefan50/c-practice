@@ -7,7 +7,7 @@ using namespace std;
 class Stack
 {
 	int top_;
-	char arr[STACK_SIZE];
+	char arr_[STACK_SIZE];
 public:
 	Stack()
 	{
@@ -25,7 +25,7 @@ public:
 	{
 		if(!empty())
 		{
-			return arr[--top_]; 
+			return arr_[--top_]; 
 		}
 		else 
 		{
