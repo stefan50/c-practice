@@ -36,7 +36,7 @@ public:
 	{
 		if(!full())
 		{
-			arr[top_++] = val;
+			arr_[top_++] = val;
 		}
 		else
 		{
